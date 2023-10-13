@@ -1,35 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_JUJU_COS_308113C0-BA45-41F4-8499-8BE321E66BA1_PROMETHEUS_0",
-      "label": "juju_cos_308113c0-ba45-41f4-8499-8be321e66ba1_prometheus_0",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "9.2.1"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -55,7 +24,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -73,7 +41,7 @@
       "type": "row"
     },
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -81,8 +49,673 @@
         "y": 1
       },
       "id": 4,
-      "panels": [],
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheusds}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": [
+              {
+                "__systemRef": "hideSeriesFrom",
+                "matcher": {
+                  "id": "byNames",
+                  "options": {
+                    "mode": "exclude",
+                    "names": [
+                      "Remaining Memory (MB)"
+                    ],
+                    "prefix": "All except:",
+                    "readOnly": true
+                  }
+                },
+                "properties": [
+                  {
+                    "id": "custom.hideFrom",
+                    "value": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": true
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 2
+          },
+          "id": 2,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "BlockManager_memory_maxMem_MB{job=\"$spark_job_id\",juju_application=~\"$juju_application\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\",role=\"driver\"}",
+              "instant": false,
+              "legendFormat": "Max Memory (MB)",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "expr": "BlockManager_memory_maxOffHeapMem_MB{job=\"$spark_job_id\",juju_application=~\"$juju_application\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\",role=\"driver\"}",
+              "hide": false,
+              "legendFormat": "Max Off Heap Memory (MB)",
+              "range": true,
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "expr": "BlockManager_memory_maxOnHeapMem_MB{job=\"$spark_job_id\",juju_application=~\"$juju_application\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\",role=\"driver\"}",
+              "hide": false,
+              "legendFormat": "Max On Heap Memory (MB)",
+              "range": true,
+              "refId": "C"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "expr": "BlockManager_memory_remainingMem_MB{job=\"$spark_job_id\",juju_application=~\"$juju_application\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\",role=\"driver\"}",
+              "hide": false,
+              "legendFormat": "Remaining Memory (MB)",
+              "range": true,
+              "refId": "D"
+            }
+          ],
+          "title": "Block Manager Memory",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheusds}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 2
+          },
+          "id": 6,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "expr": "BlockManager_disk_diskSpaceUsed_MB{job=\"$spark_job_id\",juju_application=~\"$juju_application\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\",role=\"driver\"}",
+              "legendFormat": "Disk Memory (MB)",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Block Manager Disk Memory",
+          "type": "timeseries"
+        }
+      ],
       "title": "Block Manager",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 10,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheusds}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 11
+          },
+          "id": 12,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "HiveExternalCatalog_fileCacheHits{job=\"$spark_job_id\",juju_application=~\"$juju_application\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\",role=\"driver\"}",
+              "instant": true,
+              "legendFormat": "File Cache Hits",
+              "range": false,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "HiveExternalCatalog_filesDiscovered{job=\"$spark_job_id\",juju_application=~\"$juju_application\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\",role=\"driver\"}",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "File Discovered",
+              "range": false,
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "HiveExternalCatalog_hiveClientCalls{job=\"$spark_job_id\",juju_application=~\"$juju_application\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\",role=\"driver\"}",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "Client Calls",
+              "range": false,
+              "refId": "C"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "HiveExternalCatalog_parallelListingJobCount{job=\"$spark_job_id\",juju_application=~\"$juju_application\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\",role=\"driver\"}",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "Parallel Listing Jobs",
+              "range": false,
+              "refId": "D"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "HiveExternalCatalog_partitionsFetched{job=\"$spark_job_id\",juju_application=~\"$juju_application\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\",role=\"driver\"}",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "Partitions Fetched",
+              "range": false,
+              "refId": "E"
+            }
+          ],
+          "title": "Hive External Catalog",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Hive External Catalog",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "id": 14,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheusds}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 12
+          },
+          "id": 16,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "DAGScheduler_job_activeJobs{job=\"$spark_job_id\",juju_application=~\"$juju_application\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\",role=\"driver\"}",
+              "instant": true,
+              "legendFormat": "Active Jobs",
+              "range": false,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "DAGScheduler_job_allJobs{job=\"$spark_job_id\",juju_application=~\"$juju_application\",juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_unit=~\"$juju_unit\",role=\"driver\"}",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "All Jobs",
+              "range": false,
+              "refId": "B"
+            }
+          ],
+          "title": "DAG Schedule Jobs",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheusds}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 12
+          },
+          "id": 18,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "expr": "DAGScheduler_stage_failedStages{role=\"driver\", job=\"$spark_job_id\"}",
+              "legendFormat": "Failed Stages",
+              "range": true,
+              "refId": "FailedStages"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "expr": "DAGScheduler_stage_runningStages{role=\"driver\", job=\"$spark_job_id\"}",
+              "hide": false,
+              "legendFormat": "Running Stages",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prometheusds}"
+              },
+              "editorMode": "builder",
+              "expr": "DAGScheduler_stage_waitingStages{role=\"driver\", job=\"$spark_job_id\"}",
+              "hide": false,
+              "legendFormat": "Waiting Stages",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "Stages Status",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Dag Scheduler",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 20,
+      "panels": [],
+      "title": "Executor Metrics",
       "type": "row"
     },
     {
@@ -139,42 +772,17 @@
               }
             ]
           },
-          "unit": "decmbytes"
+          "unit": "bytes"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "Remaining Memory (MB)"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 12,
         "x": 0,
-        "y": 2
+        "y": 5
       },
-      "id": 2,
+      "id": 22,
       "options": {
         "legend": {
           "calcs": [],
@@ -194,10 +802,8 @@
             "uid": "${prometheusds}"
           },
           "editorMode": "builder",
-          "exemplar": false,
-          "expr": "BlockManager_memory_maxMem_MB{role=\"driver\", job=\"$spark_job_id\"}",
-          "instant": false,
-          "legendFormat": "Max Memory (MB)",
+          "expr": "ExecutorMetrics_DirectPoolMemory{role=\"driver\", job=\"$spark_job_id\"}",
+          "legendFormat": "Direct Pool Memory",
           "range": true,
           "refId": "A"
         },
@@ -207,9 +813,9 @@
             "uid": "${prometheusds}"
           },
           "editorMode": "builder",
-          "expr": "BlockManager_memory_maxOffHeapMem_MB{role=\"driver\", job=\"$spark_job_id\"}",
+          "expr": "ExecutorMetrics_JVMHeapMemory{role=\"driver\", job=\"$spark_job_id\"}",
           "hide": false,
-          "legendFormat": "Max Off Heap Memory (MB)",
+          "legendFormat": "JVM Heap Memory",
           "range": true,
           "refId": "B"
         },
@@ -219,9 +825,9 @@
             "uid": "${prometheusds}"
           },
           "editorMode": "builder",
-          "expr": "BlockManager_memory_maxOnHeapMem_MB{role=\"driver\", job=\"$spark_job_id\"}",
+          "expr": "ExecutorMetrics_JVMOffHeapMemory{role=\"driver\", job=\"$spark_job_id\"}",
           "hide": false,
-          "legendFormat": "Max On Heap Memory (MB)",
+          "legendFormat": "JVM Off Heap Memory",
           "range": true,
           "refId": "C"
         },
@@ -231,107 +837,38 @@
             "uid": "${prometheusds}"
           },
           "editorMode": "builder",
-          "expr": "BlockManager_memory_remainingMem_MB{role=\"driver\", job=\"$spark_job_id\"}",
+          "expr": "ExecutorMetrics_OffHeapExecutionMemory{role=\"driver\", job=\"$spark_job_id\"}",
           "hide": false,
-          "legendFormat": "Remaining Memory (MB)",
+          "legendFormat": "JVM Off Heap Execution Memory",
           "range": true,
           "refId": "D"
-        }
-      ],
-      "title": "Block Manager Memory",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${prometheusds}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "decmbytes"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 2
-      },
-      "id": 6,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "${prometheusds}"
           },
           "editorMode": "builder",
-          "expr": "BlockManager_disk_diskSpaceUsed_MB{role=\"driver\", job=\"$spark_job_id\"}",
-          "legendFormat": "Disk Memory (MB)",
+          "expr": "ExecutorMetrics_OnHeapStorageMemory{role=\"driver\", job=\"$spark_job_id\"}",
+          "hide": false,
+          "legendFormat": "JVM On Heap Storage Memory",
           "range": true,
-          "refId": "A"
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheusds}"
+          },
+          "editorMode": "builder",
+          "expr": "ExecutorMetrics_OnHeapExecutionMemory{role=\"driver\", job=\"$spark_job_id\"}",
+          "hide": false,
+          "legendFormat": "JVM On Heap Execution Memory",
+          "range": true,
+          "refId": "F"
         }
       ],
-      "title": "Block Manager Disk Memory",
+      "title": "JVM Executor Memory",
       "type": "timeseries"
     },
     {
@@ -340,11 +877,11 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 13
       },
-      "id": 10,
+      "id": 24,
       "panels": [],
-      "title": "Hive External Catalog",
+      "title": "Executors",
       "type": "row"
     },
     {
@@ -408,9 +945,9 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 12
+        "y": 14
       },
-      "id": 12,
+      "id": 26,
       "options": {
         "legend": {
           "calcs": [],
@@ -430,11 +967,9 @@
             "uid": "${prometheusds}"
           },
           "editorMode": "builder",
-          "exemplar": false,
-          "expr": "HiveExternalCatalog_fileCacheHits{role=\"driver\", job=\"$spark_job_id\"}",
-          "instant": true,
-          "legendFormat": "File Cache Hits",
-          "range": false,
+          "expr": "executor_bytesRead{role=\"executor\", job=\"$spark_job_id\"}",
+          "legendFormat": "Bytes Reads (#Executor {{number}})",
+          "range": true,
           "refId": "A"
         },
         {
@@ -443,72 +978,108 @@
             "uid": "${prometheusds}"
           },
           "editorMode": "builder",
-          "exemplar": false,
-          "expr": "HiveExternalCatalog_filesDiscovered{role=\"driver\", job=\"$spark_job_id\"}",
+          "expr": "executor_bytesWritten{role=\"executor\", job=\"$spark_job_id\"}",
           "hide": false,
-          "instant": true,
-          "legendFormat": "File Discovered",
-          "range": false,
+          "legendFormat": "Bytes Written (#Executor {{number}})",
+          "range": true,
           "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prometheusds}"
-          },
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "HiveExternalCatalog_hiveClientCalls{role=\"driver\", job=\"$spark_job_id\"}",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "Client Calls",
-          "range": false,
-          "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prometheusds}"
-          },
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "HiveExternalCatalog_parallelListingJobCount{role=\"driver\", job=\"$spark_job_id\"}",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "Parallel Listing Jobs",
-          "range": false,
-          "refId": "D"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prometheusds}"
-          },
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "HiveExternalCatalog_partitionsFetched{role=\"driver\", job=\"$spark_job_id\"}",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "Partitions Fetched",
-          "range": false,
-          "refId": "E"
         }
       ],
-      "title": "Hive External Catalog",
+      "title": "Executor Read and Writes",
       "type": "timeseries"
     },
     {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 20
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prometheusds}"
       },
-      "id": 14,
-      "panels": [],
-      "title": "Dag Scheduler",
-      "type": "row"
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ns"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 14
+      },
+      "id": 28,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheusds}"
+          },
+          "editorMode": "builder",
+          "expr": "rate(executor_cpuTime{role=\"executor\", job=\"$spark_job_id\"}[$__interval])",
+          "legendFormat": "CPU time #{{number}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Cpu Time Count",
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -571,9 +1142,9 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 21
+        "y": 22
       },
-      "id": 16,
+      "id": 30,
       "options": {
         "legend": {
           "calcs": [],
@@ -593,29 +1164,13 @@
             "uid": "${prometheusds}"
           },
           "editorMode": "builder",
-          "exemplar": false,
-          "expr": "DAGScheduler_job_activeJobs{role=\"driver\", job=\"$spark_job_id\"}",
-          "instant": true,
-          "legendFormat": "Active Jobs",
-          "range": false,
+          "expr": "rate(executor_runTime{role=\"executor\", job=\"$spark_job_id\"}[$__rate_interval])",
+          "legendFormat": "Runtime (Executor #{{number}})",
+          "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prometheusds}"
-          },
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "DAGScheduler_job_allJobs{role=\"driver\", job=\"$spark_job_id\"}",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "All Jobs",
-          "range": false,
-          "refId": "B"
         }
       ],
-      "title": "Panel Title",
+      "title": "Executors Runtime",
       "type": "timeseries"
     }
   ],
@@ -628,8 +1183,57 @@
       {
         "current": {
           "selected": false,
-          "text": "juju_cos_308113c0-ba45-41f4-8499-8be321e66ba1_prometheus_0",
-          "value": "juju_cos_308113c0-ba45-41f4-8499-8be321e66ba1_prometheus_0"
+          "text": "All",
+          "value": "$__all"
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": "Loki datasource",
+        "multi": true,
+        "name": "lokids",
+        "options": [],
+        "query": "loki",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "uid": "${prometheusds}"
+        },
+        "definition": "label_values(up{juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_application=~\"$juju_application\"},juju_unit)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Juju unit",
+        "multi": true,
+        "name": "juju_unit",
+        "options": [],
+        "query": {
+          "query": "label_values(up{juju_model=~\"$juju_model\",juju_model_uuid=~\"$juju_model_uuid\",juju_application=~\"$juju_application\"},juju_unit)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "juju_cos_348d0940-98ce-4ac5-8dcc-4dce43d9c620_prometheus_0",
+          "value": "juju_cos_348d0940-98ce-4ac5-8dcc-4dce43d9c620_prometheus_0"
         },
         "hide": 0,
         "includeAll": false,
@@ -646,7 +1250,11 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${prometheusds}"
@@ -671,7 +1279,11 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${prometheusds}"
@@ -695,7 +1307,11 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${prometheusds}"
@@ -719,7 +1335,11 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${prometheusds}"
@@ -742,7 +1362,11 @@
         "type": "query"
       },
       {
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "spark-0890a5cb4c344f6ea87d4322274fb069",
+          "value": "spark-0890a5cb4c344f6ea87d4322274fb069"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${prometheusds}"
@@ -767,13 +1391,13 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-12h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Spark dashboard",
   "uid": "ZyD93JGSk",
-  "version": 24,
+  "version": 1,
   "weekStart": ""
 }
